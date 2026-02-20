@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void water(int height[], int n) {
+    int leftmax[n], rightmax[n];
+
+    leftmax[0] = height[0];
+    for (int i = 1; i < n; i++) {
+        leftmax[i] = max(leftmax[i-1], height[i]);
+    }
+
+    rightmax[n-1] = height[n-1];
+    for (int i = n-2; i >= 0; i--) {
+        rightmax[i] = max(rightmax[i+1], height[i]);
+    }
+
+    int watertrapped = 0;
+    for (int i = 1; i < n-1; i++) {
+        int currwater = min(leftmax[i], rightmax[i]) - height[i];
+        if (currwater > 0) {
+            watertrapped += currwater;
+        }
+    }
+    cout << watertrapped;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    int height[n];
+    for (int i = 0; i < n; i++) {
+        cin >> height[i];
+    }
+    water(height, n);
+}
